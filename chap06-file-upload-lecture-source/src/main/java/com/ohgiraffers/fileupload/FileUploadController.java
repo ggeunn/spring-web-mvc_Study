@@ -42,7 +42,7 @@ public class FileUploadController {
             file.mkdirs();
 
             filePath = file.getAbsolutePath();
-            
+
         } else {
             filePath = resourceLoader.getResource("classpath:static/img/single").getFile().getAbsolutePath();
         }
