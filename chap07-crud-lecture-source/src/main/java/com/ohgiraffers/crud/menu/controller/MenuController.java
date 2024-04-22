@@ -2,6 +2,7 @@ package com.ohgiraffers.crud.menu.controller;
 
 import com.ohgiraffers.crud.menu.model.dao.MenuMapper;
 import com.ohgiraffers.crud.menu.model.dto.CategoryDTO;
+import com.ohgiraffers.crud.menu.model.dto.MenuAndCategoryDTO;
 import com.ohgiraffers.crud.menu.model.dto.MenuDTO;
 import com.ohgiraffers.crud.menu.model.service.MenuService;
 import org.apache.logging.log4j.LogManager;
@@ -10,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -64,5 +62,27 @@ public class MenuController {
 
         return "redirect:/menu/list";
     }
+    @GetMapping("joinCategory/list")
+    public String menuAndCategoryList(Model model) {
+
+        List<MenuAndCategoryDTO> menuAndCategoryList = menuService.findAllMenuAndCategory();
+
+        model.addAttribute("menuAndCategoryList", menuAndCategoryList);
+
+        return "menu/joinMenu";
+    }
+
+    @GetMapping("delete")
+    public void delete(){}
+
+    @PostMapping("/delete")
+    public String deleteMenu(@RequestParam int code, RedirectAttributes rttr, Locale locale){
+
+        menuService.deleteMenuByCode(code);
+        rttr.addFlashAttribute("successMessage", messageSource.getMessage("deleteMenu",null,locale));
+
+        return "redirect:/menu/list";
+    }
+
 
 }
