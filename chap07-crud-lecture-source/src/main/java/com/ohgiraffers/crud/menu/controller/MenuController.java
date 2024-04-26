@@ -48,6 +48,7 @@ public class MenuController {
     @GetMapping(value = "category", produces = "application/json; charset=UTF-8")
     @ResponseBody
     public List<CategoryDTO> findCategoryList(){
+
         return menuService.findAllCategory();
     }
 
